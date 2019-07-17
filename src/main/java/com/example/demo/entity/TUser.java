@@ -111,10 +111,29 @@ public class TUser extends  BaseEntity{
     }
 
     public void setPassword(String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        this.password = UserPasswordEncrypt.encrypt(password, "abcdef" + username + "abcdef" + username, 233);
+        this.password = UserPasswordEncrypt.encrypt(password, "abcdef" + this.username + "abcdef" + this.username, 233);
     }
 
+    public  void  setPasswordtWO(String password){
+        this.password=password;
+    }
     public boolean checkPassword(String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        return this.password.equals(UserPasswordEncrypt.encrypt(password, "abcdef" + username + "abcdef" + username, 233));
+        return this.password.equals(UserPasswordEncrypt.encrypt(password, "abcdef" + this.username + "abcdef" + this.username, 233));
+    }
+
+    @Override
+    public String toString() {
+        return "TUser{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", tel='" + tel + '\'' +
+                ", wechat='" + wechat + '\'' +
+                ", qq='" + qq + '\'' +
+                ", email='" + email + '\'' +
+                ", grade=" + grade +
+                ", missions=" + missions +
+                ", scheduleList=" + scheduleList +
+                ", tShareEvents=" + tShareEvents +
+                '}';
     }
 }

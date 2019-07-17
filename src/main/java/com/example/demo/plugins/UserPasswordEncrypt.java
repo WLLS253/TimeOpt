@@ -36,7 +36,7 @@ public class UserPasswordEncrypt {
 
         // combination
         String encryptedPassword;
-        encryptedPassword = "pbkdf2_hashmd5" + "$" + iterMd5 + "$" + saltMd5 + "$" + base64Spec;
+        encryptedPassword = "pbkdf2_sha256" + "$" + iterMd5 + "$" + saltMd5 + "$" + base64Spec;
 
         return encryptedPassword;
     }

@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import javax.sound.midi.Soundbank;
 import java.util.Optional;
 
 @RestController
@@ -57,10 +59,12 @@ public class TUserController  {
 
 
     @PostMapping(value = "/user/add")
-    public Result addUser(TUser user,HttpServletResponse response){
+    public Result addUser(TUser user){
         try {
             user.setUsername(user.getUsername());
-            user.setPassword(user.getPassword());
+            System.out.println(user);
+            user.setPasswordtWO(user.getPassword());
+            System.out.println(user.getPassword());
             user.setTel(user.getTel());
             user.setEmail(user.getEmail());
             user.setGrade(user.getGrade());
@@ -68,6 +72,8 @@ public class TUserController  {
             user.setQq(user.getQq());
             return Util.success(tUserRepository.save(user));
         }catch (Exception e){
+            user.setUsername(user.getUsername());
+            System.out.println(user);
             e.printStackTrace();
             return Util.failure(ExceptionEnums.UNKNOW_ERRPR);
         }

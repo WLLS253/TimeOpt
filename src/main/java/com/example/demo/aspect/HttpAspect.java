@@ -17,9 +17,9 @@ public class HttpAspect {
 
 
     public  final static Logger logger= LoggerFactory.getLogger(HttpAspect.class);
-    @Before("execution(public * com.example.demo.controller.TUserController.*(..))")
+    @Before("execution(public * com.example.demo.controller.TUserController.addUser(..))")
     public  void log(){
-       logger.info("h");
+       logger.info("hhhh");
     }
 
 
