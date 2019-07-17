@@ -59,28 +59,17 @@ public class TUserController  {
 
 
     @PostMapping(value = "/user/add")
-    public Result addUser(TUser user){
-        try {
-            user.setUsername(user.getUsername());
-            System.out.println(user);
-            user.setPasswordtWO(user.getPassword());
-            System.out.println(user.getPassword());
-            user.setTel(user.getTel());
-            user.setEmail(user.getEmail());
-            user.setGrade(user.getGrade());
-            user.setWechat(user.getWechat());
-            user.setQq(user.getQq());
-            return Util.success(tUserRepository.save(user));
-        }catch (Exception e){
-            user.setUsername(user.getUsername());
-            System.out.println(user);
-            e.printStackTrace();
-            return Util.failure(ExceptionEnums.UNKNOW_ERRPR);
-        }
+    public Result addUser(TUser user) {
 
+//        user.setUsername(user.getUsername());
+//        user.setPasswordtWO(user.getPassword());
+//        user.setTel(user.getTel());
+//        user.setEmail(user.getEmail());
+//        user.setGrade(user.getGrade());
+//        user.setWechat(user.getWechat());
+//        user.setQq(user.getQq());
+        return Util.failure(ExceptionEnums.UNFIND_ERROR);
 
     }
-
-
 
 }
