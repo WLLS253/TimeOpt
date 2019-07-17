@@ -13,7 +13,7 @@ import java.security.spec.KeySpec;
 public class UserPasswordEncrypt {
 
 
-    private static final String pbkdf2 = "PBKDF2MD5AndHashH1";
+    private static final String pbkdf2 = "PBKDF2WithHmacSHA1";
     private static final int hashSize = 32;
 
     public static String encrypt(String clearText, String salt, int iterations) throws NoSuchAlgorithmException, InvalidKeySpecException {

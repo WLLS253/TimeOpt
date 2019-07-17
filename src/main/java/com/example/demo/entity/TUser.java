@@ -110,11 +110,11 @@ public class TUser extends  BaseEntity{
         this.grade = grade;
     }
 
-    public void setPassword(String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    public void setPasswordT(String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
         this.password = UserPasswordEncrypt.encrypt(password, "abcdef" + this.username + "abcdef" + this.username, 233);
     }
 
-    public  void  setPasswordtWO(String password){
+    public  void  setPassword(String password){
         this.password=password;
     }
     public boolean checkPassword(String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
