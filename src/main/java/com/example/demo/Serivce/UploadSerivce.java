@@ -71,7 +71,7 @@ public class UploadSerivce {
 
 
     }
-
+//hh
 //    private String saveUploadFile(String filePathNew) {
 //        //获取本机IP
 //        String host = null;
