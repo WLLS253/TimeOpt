@@ -32,6 +32,8 @@ public class TUser extends  BaseEntity{
     @Column(nullable = false,unique = true)
     private String email;
 
+    private String image;
+
 
     private Integer grade;
 
@@ -52,7 +54,13 @@ public class TUser extends  BaseEntity{
     private List<TShareEvent> tShareEvents;
 
 
+    public String getImage() {
+        return image;
+    }
 
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public String getUsername() {
         return username;
@@ -130,6 +138,7 @@ public class TUser extends  BaseEntity{
                 ", wechat='" + wechat + '\'' +
                 ", qq='" + qq + '\'' +
                 ", email='" + email + '\'' +
+                ", image='" + image + '\'' +
                 ", grade=" + grade +
                 ", missions=" + missions +
                 ", scheduleList=" + scheduleList +

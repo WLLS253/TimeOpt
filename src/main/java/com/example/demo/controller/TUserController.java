@@ -3,7 +3,9 @@ package com.example.demo.controller;
 
 import com.example.demo.Enums.ExceptionEnums;
 import com.example.demo.Result.Result;
+import com.example.demo.Serivce.UploadSerivce;
 import com.example.demo.Util.Util;
+import com.example.demo.entity.TShareEvent;
 import com.example.demo.entity.TUser;
 import com.example.demo.plugins.Tokener;
 import com.example.demo.repository.TUserRepository;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +27,9 @@ public class TUserController  {
 
     @Autowired
     private TUserRepository tUserRepository;
+
+    @Autowired
+    private  UploadSerivce uploadSerivce;
 
 
     @PostMapping(value = "/login",produces = "application/json; charset=utf-8")
@@ -78,6 +84,18 @@ public class TUserController  {
 
     }
 
+    @PostMapping(value = "shareEvent/add")
+    public  Result  addshare(TShareEvent shareEvent, @RequestParam("file")MultipartFile file){
+
+        try {
+            shareEvent.setImageURL(uploadSerivce.upImageFire(file));
+            return Util.success(shareEvent);
+        }catch (Exception e){
+            return Util.failure(ExceptionEnums.UNKNOW_ERRPR);
+        }
+
+    }
+
 
 
 
@@ -85,6 +103,10 @@ public class TUserController  {
     public String PCUserList() {
         return "hhhh";
     }
+
+
+
+
 
 
 }

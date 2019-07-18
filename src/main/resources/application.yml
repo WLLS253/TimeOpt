@@ -19,6 +19,12 @@ spring:
     rollback-on-commit-failure: true
 
 
+
+
+
+file:
+  rootPath: "E:"
+  sonPath: "/img/"
 #graphql:
 #  servlet:
 #    mapping: /resources/graphql
