@@ -80,19 +80,6 @@ public class TUserController  {
 
 
 
-    @PostMapping(value = "/user/add1")
-    public Result addUser1(TUser user) {
-
-//        user.setUsername(user.getUsername());
-//        user.setPasswordtWO(user.getPassword());
-//        user.setTel(user.getTel());
-//        user.setEmail(user.getEmail());
-//        user.setGrade(user.getGrade());
-//        user.setWechat(user.getWechat());
-//        user.setQq(user.getQq());
-        return Util.failure(ExceptionEnums.UNFIND_ERROR);
-
-    }
 
     @GetMapping(value = "/pc/list")
     public String PCUserList() {
