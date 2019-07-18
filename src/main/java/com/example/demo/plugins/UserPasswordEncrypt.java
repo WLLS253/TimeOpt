@@ -11,17 +11,14 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 
 public class UserPasswordEncrypt {
-
-
-
-    private static final String pbkdf2 = "PBKDF2WithHmacSHA1";
+    private static final String pbkdf2Algorithm = "PBKDF2WithHmacSHA1";
     private static final int hashSize = 32;
 
     public static String encrypt(String clearText, String salt, int iterations) throws NoSuchAlgorithmException, InvalidKeySpecException {
         // pbdkf2
         byte[] saltBytes = DatatypeConverter.parseHexBinary(salt);
         KeySpec spec = new PBEKeySpec(clearText.toCharArray(), saltBytes, iterations, hashSize * 4);
-        SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance(pbkdf2);
+        SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance(pbkdf2Algorithm);
         byte[] specHash = secretKeyFactory.generateSecret(spec).getEncoded();
 
         // base64
@@ -32,6 +29,8 @@ public class UserPasswordEncrypt {
         base64Spec = messageDigestIterations(base64Spec, iterations * 2);
 
 
+
+        // md5-salt and md5-iterations
         String saltMd5 = messageDigestIterations(salt, iterations * 3);
         String iterMd5 = messageDigestIterations(String.valueOf(iterations * 233), iterations * 4);
 

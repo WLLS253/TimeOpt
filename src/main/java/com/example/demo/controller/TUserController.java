@@ -75,6 +75,7 @@ public class TUserController  {
             user.setGrade(user.getGrade());
             user.setWechat(user.getWechat());
             user.setQq(user.getQq());
+            System.out.println(user);
             return Util.success(tUserRepository.save(user));
         }catch (Exception e){
             e.printStackTrace();
