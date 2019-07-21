@@ -11,15 +11,13 @@ import com.example.demo.plugins.Tokener;
 import com.example.demo.repository.TUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.sound.midi.Soundbank;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -33,27 +31,26 @@ public class TUserController  {
 
 
     @PostMapping(value = "/login",produces = "application/json; charset=utf-8")
-    private Result Login(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletResponse response){
+    public Result Login(@RequestParam("username") String username, @RequestParam("password") String password){
 
         try {
-            TUser tUser =new TUser();
-            tUser.setUsername(username);
+            System.out.println(username);
+            List<TUser> tUsers=tUserRepository.findByUsername(username);
 
-            Optional<TUser> userOptional = tUserRepository.findOne(Example.of(tUser));
             boolean valid = false;
-            if (userOptional.isPresent()) {
-                if (userOptional.get().checkPassword(password)) {
-                    String token = Tokener.generateToken(String.valueOf(userOptional.get().getId()));
-                    response.setHeader("isLogin", "true");
-                    response.setHeader("token", token);
-                    return Util.success(tUser);
+            if (tUsers.size()!=0) {
+                if (tUsers.get(0).checkPassword(password)) {
+                    String token = Tokener.generateToken(String.valueOf(tUsers.get(0).getId()));
+//                    response.setHeader("isLogin", "true");
+//                    response.setHeader("token", token);
+                    return Util.success(tUsers.get(0));
                 }
             }
-            response.setHeader("isLogin", "false");
+//            response.setHeader("isLogin", "false");
             return  Util.failure(ExceptionEnums.PASSWORD_ERROR);
         } catch (Exception e) {
             e.printStackTrace();
-            response.setHeader("isLogin", "false");
+//            response.setHeader("isLogin", "false");
             return  Util.failure(ExceptionEnums.UNKNOW_ERRPR);
         }
 

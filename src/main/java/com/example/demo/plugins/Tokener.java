@@ -8,6 +8,7 @@ import sun.misc.BASE64Encoder;
 import java.nio.charset.Charset;
 import java.util.Base64;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 public class Tokener {
@@ -52,11 +53,11 @@ public class Tokener {
             finalResultBuilder.append((char)(midResult.charAt(i) + i * i % 3));
         }
         String result = finalResultBuilder.toString();
-        Tokeners tokens = new Tokeners();
+        Tokeners tokens=new Tokeners();
         tokens.setUuid(uuid);
-        Optional<Tokeners> tokensOptional = tokenersRepository.findOne(Example.of(tokens));
-        if (tokensOptional.isPresent()) {
-            Tokeners target = tokensOptional.get();
+        List<Tokeners> tokeners=tokenersRepository.findByUuid(uuid);
+        if (tokeners.size()>0) {
+            Tokeners target = tokeners.get(0);
             target.setToken(result);
             tokenersRepository.save(target);
         } else {
