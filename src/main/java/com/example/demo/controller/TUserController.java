@@ -3,12 +3,14 @@ package com.example.demo.controller;
 
 import com.example.demo.Enums.ExceptionEnums;
 import com.example.demo.Result.Result;
+import com.example.demo.Serivce.TokenService;
 import com.example.demo.Serivce.UploadSerivce;
 import com.example.demo.Util.Util;
 import com.example.demo.entity.TShareEvent;
 import com.example.demo.entity.TUser;
 import com.example.demo.plugins.Tokener;
 import com.example.demo.repository.TUserRepository;
+import org.antlr.v4.runtime.atn.TokensStartState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +32,9 @@ public class TUserController  {
     private  UploadSerivce uploadSerivce;
 
 
+    @Autowired
+    private TokenService tokenService;
+
     @PostMapping(value = "/login",produces = "application/json; charset=utf-8")
     public Result Login(@RequestParam("username") String username, @RequestParam("password") String password){
 
@@ -40,7 +45,7 @@ public class TUserController  {
             boolean valid = false;
             if (tUsers.size()!=0) {
                 if (tUsers.get(0).checkPassword(password)) {
-                    String token = Tokener.generateToken(String.valueOf(tUsers.get(0).getId()));
+                    String token = tokenService.generateToken(String.valueOf(tUsers.get(0).getId()));
 //                    response.setHeader("isLogin", "true");
 //                    response.setHeader("token", token);
                     return Util.success(tUsers.get(0));
