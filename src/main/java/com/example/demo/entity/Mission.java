@@ -53,4 +53,7 @@ public class Mission extends  BaseEntity {
     public void setmGrade(Integer mGrade) {
         this.mGrade = mGrade;
     }
+
+
+
 }

@@ -3,6 +3,7 @@ package com.example.demo.controller;
 
 import com.example.demo.Enums.ExceptionEnums;
 import com.example.demo.Result.Result;
+import com.example.demo.Serivce.CookieService;
 import com.example.demo.Serivce.TokenService;
 import com.example.demo.Serivce.UploadSerivce;
 import com.example.demo.Util.Util;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sound.midi.Soundbank;
 import java.util.List;
@@ -35,27 +37,32 @@ public class TUserController  {
     @Autowired
     private TokenService tokenService;
 
+    @Autowired
+    private  CookieService cookieService;
+
     @PostMapping(value = "/login",produces = "application/json; charset=utf-8")
-    public Result Login(@RequestParam("username") String username, @RequestParam("password") String password){
+    public Result Login(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletResponse response){
 
         try {
             System.out.println(username);
             List<TUser> tUsers=tUserRepository.findByUsername(username);
 
+
             boolean valid = false;
             if (tUsers.size()!=0) {
                 if (tUsers.get(0).checkPassword(password)) {
                     String token = tokenService.generateToken(String.valueOf(tUsers.get(0).getId()));
-//                    response.setHeader("isLogin", "true");
-//                    response.setHeader("token", token);
+                    response.setHeader("isLogin", "true");
+                    response.setHeader("token", token);
+                    cookieService.writeCookie(response,username,username);
                     return Util.success(tUsers.get(0));
                 }
             }
-//            response.setHeader("isLogin", "false");
+            response.setHeader("isLogin", "false");
             return  Util.failure(ExceptionEnums.PASSWORD_ERROR);
         } catch (Exception e) {
             e.printStackTrace();
-//            response.setHeader("isLogin", "false");
+            response.setHeader("isLogin", "false");
             return  Util.failure(ExceptionEnums.UNKNOW_ERRPR);
         }
 
@@ -67,7 +74,7 @@ public class TUserController  {
 
 
     @PostMapping(value = "/user/add")
-    public Result addUser(TUser user) {
+    public Result addUser(TUser user,HttpServletResponse response) {
         try {
 
             user.setUsername(user.getUsername());
@@ -78,24 +85,13 @@ public class TUserController  {
             user.setWechat(user.getWechat());
             user.setQq(user.getQq());
             System.out.println(user);
+            cookieService.writeCookie(response,"sessionid",user.getUsername());
             return Util.success(tUserRepository.save(user));
         }catch (Exception e){
             e.printStackTrace();
             return Util.failure(ExceptionEnums.UNKNOW_ERRPR);
         }
 
-
-    }
-
-    @PostMapping(value = "shareEvent/add")
-    public  Result  addshare(TShareEvent shareEvent, @RequestParam("file")MultipartFile file){
-
-        try {
-            shareEvent.setImageURL(uploadSerivce.upImageFire(file));
-            return Util.success(shareEvent);
-        }catch (Exception e){
-            return Util.failure(ExceptionEnums.UNKNOW_ERRPR);
-        }
 
     }
 
