@@ -1,6 +1,9 @@
 package com.example.demo.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -11,10 +14,12 @@ public class Event extends BaseEntity {
     private String ename;
 
     @Column(nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startTime;
 
     @Column(nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endTime;
 
@@ -29,6 +34,11 @@ public class Event extends BaseEntity {
     @Column(nullable = true)
     @Temporal(TemporalType.TIMESTAMP)
     private Date finishTime;
+
+    @ManyToOne(cascade =CascadeType.REFRESH,targetEntity =TUser.class,fetch = FetchType.LAZY)
+    @JoinColumn(name="tuser_id")
+    private TUser tUser;
+
 
 
     @ManyToOne(cascade = CascadeType.REFRESH,targetEntity = Schedule.class,fetch = FetchType.LAZY)
@@ -89,5 +99,22 @@ public class Event extends BaseEntity {
 
     public void setFinishTime(Date finishTime) {
         this.finishTime = finishTime;
+    }
+
+    @JsonBackReference
+    public TUser gettUser() {
+        return tUser;
+    }
+
+    public void settUser(TUser tUser) {
+        this.tUser = tUser;
+    }
+
+    public Schedule getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(Schedule schedule) {
+        this.schedule = schedule;
     }
 }

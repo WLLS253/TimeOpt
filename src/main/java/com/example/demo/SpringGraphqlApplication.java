@@ -13,30 +13,5 @@ public class SpringGraphqlApplication {
     }
 
 
-//    @Bean
-//    public Query query(
-//
-//            AuthorRepository authorRepository,
-//            BookRepository bookRepository
-//    ){
-//        return  new Query(
-//                authorRepository,
-//                bookRepository
-//        );
-//
-//    }
-//
-//    @Bean
-//    public Mutation mutation(
-//            AuthorRepository authorRepository,
-//            BookRepository bookRepository
-//
-//    ){
-//        return  new Mutation(
-//                authorRepository,
-//                bookRepository
-//        );
-//    }
-
 
 }

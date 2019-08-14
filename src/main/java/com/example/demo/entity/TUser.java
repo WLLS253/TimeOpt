@@ -52,7 +52,40 @@ public class TUser extends  BaseEntity{
     @OneToMany(targetEntity = TShareEvent.class)
     private List<TShareEvent> tShareEvents;
 
+    @OneToMany(targetEntity = Event.class)
+    private  List<Event> events;
 
+    public List<Mission> getMissions() {
+        return missions;
+    }
+
+    public void setMissions(List<Mission> missions) {
+        this.missions = missions;
+    }
+
+    public List<Schedule> getScheduleList() {
+        return scheduleList;
+    }
+
+    public void setScheduleList(List<Schedule> scheduleList) {
+        this.scheduleList = scheduleList;
+    }
+
+    public List<TShareEvent> gettShareEvents() {
+        return tShareEvents;
+    }
+
+    public void settShareEvents(List<TShareEvent> tShareEvents) {
+        this.tShareEvents = tShareEvents;
+    }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
 
     public String getUsername() {
         return username;
