@@ -1,6 +1,8 @@
 package com.example.demo.entity;
 
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.naming.Name;
 import javax.persistence.*;
 import java.util.Date;
@@ -47,5 +49,17 @@ public class Schedule extends BaseEntity{
 
     public void setEventList(List<Event> eventList) {
         this.eventList = eventList;
+    }
+
+    @Override
+    public String toString() {
+        return "Schedule{" +
+                "date=" + date +
+                ", tUser=" + tUser +
+                ", eventList=" + eventList +
+                ", id=" + id +
+                ", createdTime=" + createdTime +
+                ", updatedTime=" + updatedTime +
+                '}';
     }
 }

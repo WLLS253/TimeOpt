@@ -7,9 +7,11 @@ import com.example.demo.Serivce.CookieService;
 import com.example.demo.Serivce.TokenService;
 import com.example.demo.Serivce.UploadSerivce;
 import com.example.demo.Util.Util;
+import com.example.demo.entity.Schedule;
 import com.example.demo.entity.TShareEvent;
 import com.example.demo.entity.TUser;
 import com.example.demo.plugins.Tokener;
+import com.example.demo.repository.ScheduleRepository;
 import com.example.demo.repository.TUserRepository;
 import org.antlr.v4.runtime.atn.TokensStartState;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,9 @@ public class TUserController  {
 
     @Autowired
     private  CookieService cookieService;
+
+    @Autowired
+    private ScheduleRepository scheduleRepository;
 
     @PostMapping(value = "/login",produces = "application/json; charset=utf-8")
     public Result Login(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletResponse response){
@@ -84,6 +89,7 @@ public class TUserController  {
             user.setGrade(user.getGrade());
             user.setWechat(user.getWechat());
             user.setQq(user.getQq());
+
             System.out.println(user);
             cookieService.writeCookie(response,"sessionid",user.getUsername());
             return Util.success(tUserRepository.save(user));

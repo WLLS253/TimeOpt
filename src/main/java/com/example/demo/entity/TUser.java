@@ -31,9 +31,6 @@ public class TUser extends  BaseEntity{
     @Column(nullable = false,unique = true)
     private String email;
 
-
-
-
     private Integer grade;
 
     @ManyToMany

@@ -39,11 +39,11 @@ public class Event extends BaseEntity {
     @JoinColumn(name="tuser_id")
     private TUser tUser;
 
-
-
     @ManyToOne(cascade = CascadeType.REFRESH,targetEntity = Schedule.class,fetch = FetchType.LAZY)
     @JoinColumn(name = "schedule_id")
     private Schedule schedule;
+
+
 
     public String getEname() {
         return ename;

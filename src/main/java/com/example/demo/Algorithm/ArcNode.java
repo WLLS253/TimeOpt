@@ -3,7 +3,7 @@ package com.example.demo.Algorithm;
 /**
  *
  * @author 于鑫舟
- * 边结点的实现
+ * 边11结点的实现
  */
 public class ArcNode {
     public short adjvex;    //邻接点
