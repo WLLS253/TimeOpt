@@ -109,19 +109,48 @@ public class DaoController {
             return Util.failure(ExceptionEnums.UNKNOW_ERRPR);
         }
     }
-
-    @PostMapping(value = "/test/")
-    public Result testSch(Event event , @RequestParam("test_id") Long id){
-        Schedule schedule=scheduleRepository.findById(id).get();
-        System.out.println(schedule);
-        List<Event>eventList=schedule.getEventList();
-        System.out.println(eventList);
-        eventList.add(event);
-        schedule.setEventList(eventList);
-
-        return  Util.success(eventRepository.save(event));
+//test 测试返回一天中的安排
+    @GetMapping(value = "/test/{name}/{date}")
+    public Result testSch(@PathVariable("name") String name,@PathVariable("date") String date){
+        try {
+            TUser tUser=tUserRepository.findByUsername(name).get(0);
+            SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
+            Date date1=simpleDateFormat.parse(date);
+//            List<Event>eventList=eventRepository.findAllByTUserAndStartTimeAfterAndEndTimeBefore(tUser,date1,date1);
+            List<Event>eventList=eventRepository.findAllByTUserAndStartTimeBeforeAndEndTimeAfter(tUser,date1,date1);
+            if(eventList.size()==0){
+                return Util.failure(ExceptionEnums.UNFIND_ERROR);
+            }else {
+                ArrayList<V>vArrayList=daoService.daoSort(eventList);
+                return Util.success(vArrayList);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return Util.failure(ExceptionEnums.UNKNOW_ERRPR);
+        }
 
     }
+//update event
+    @PutMapping(value = "/event/update/{id}")
+    public Result updateEvent(@PathVariable("id")Long id,Event event){
+        try {
+            Event event1=eventRepository.findById(id).get();
+            event1.setEname(event.getEname());
+            event1.setContent(event.getContent());
+            event1.setLevel(event.getLevel());
+            event1.setFinish(event.isFinish());
+            event1.setFinishTime(event.getFinishTime());
+            event1.setStartTime(event.getStartTime());
+            event.setEndTime(event.getEndTime());
+
+            return  Util.success(eventRepository.save(event1));
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return Util.failure(ExceptionEnums.UNKNOW_ERRPR);
+        }
+    }
+
 
 
 
