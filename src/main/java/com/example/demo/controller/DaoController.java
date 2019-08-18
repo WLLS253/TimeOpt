@@ -95,8 +95,15 @@ public class DaoController {
             TUser tUser=tUserRepository.findByUsername(name).get(0);
             SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
             Date date1=simpleDateFormat.parse(date);
-            Schedule schedule=scheduleRepository.findAllByTUserAndAndDate(tUser,date1).get(0);
-            return Util.success(schedule);
+            List<Schedule> scheduleList=scheduleRepository.findAllByTUserAndAndDate(tUser,date1);
+            if(scheduleList.size()==0){
+                return Util.failure(ExceptionEnums.UNFIND_ERROR);
+            }else {
+                Schedule schedule=scheduleList.get(0);
+                List<Event>eventList=schedule.getEventList();
+                ArrayList<V>vArrayList=daoService.daoSort(eventList);
+                return Util.success(vArrayList);
+            }
         }catch (Exception e){
             e.printStackTrace();
             return Util.failure(ExceptionEnums.UNKNOW_ERRPR);
