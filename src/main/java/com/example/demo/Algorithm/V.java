@@ -21,16 +21,25 @@ public class V {
     public ArcNode firstedge;   //指向边表的第一个边结点
     public final static short PATHMAX=1000;  //顶点初始的path_value
     
+//    public V(){
+//        super();
+//        this.finish=false;
+//        this.finish_time="00:00";
+//        this.path_level=V.PATHMAX;
+//        this.in_degree=0;
+//        this.out_degree=0;
+//        this.firstedge=null;
+//    }
+
     public V(){
         super();
         this.finish=false;
-        this.finish_time="00:00";
+        this.finish_time="1970-01-01 00:00:00";
         this.path_level=V.PATHMAX;
         this.in_degree=0;
         this.out_degree=0;
         this.firstedge=null;
     }
-
     @Override
     public String toString() {
         return "V{" +
