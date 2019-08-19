@@ -116,8 +116,16 @@ public class DaoController {
             TUser tUser=tUserRepository.findByUsername(name).get(0);
             SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
             Date date1=simpleDateFormat.parse(date);
+            Calendar calendar=Calendar.getInstance();
+            calendar.setTime(date1);
+            calendar.add(Calendar.DATE,1);
+            date1=calendar.getTime();
+            calendar.add(Calendar.DATE,-1);
+            Date date2=calendar.getTime();
+            System.out.println(date2);
+            System.out.println(date1);
 //            List<Event>eventList=eventRepository.findAllByTUserAndStartTimeAfterAndEndTimeBefore(tUser,date1,date1);
-            List<Event>eventList=eventRepository.findAllByTUserAndStartTimeBeforeAndEndTimeAfter(tUser,date1,date1);
+            List<Event>eventList=eventRepository.findAllByTUserAndStartTimeBeforeAndEndTimeAfter(tUser,date1,date2);
             if(eventList.size()==0){
                 return Util.failure(ExceptionEnums.UNFIND_ERROR);
             }else {
@@ -128,7 +136,6 @@ public class DaoController {
             e.printStackTrace();
             return Util.failure(ExceptionEnums.UNKNOW_ERRPR);
         }
-
     }
 //update event
     @PutMapping(value = "/event/update/{id}")
