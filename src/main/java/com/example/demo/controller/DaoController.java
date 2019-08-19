@@ -44,11 +44,15 @@ public class DaoController {
     public Result  addEvent(Event event, @RequestParam("tuser_id")Long tuser_id ){
         try {
             TUser tUser=tUserRepository.findById(tuser_id).get();
-            Schedule schedule=new Schedule();
+
             Date date=event.getStartTime();
-            schedule.setDate(date);
-            schedule.settUser(tUser);
-            scheduleRepository.save(schedule);
+             List<Schedule>scheduleList=scheduleRepository.findAllByTUserAndAndDate(tUser,date);
+            if(scheduleList.size()==0) {
+                Schedule schedule = new Schedule();
+                schedule.setDate(date);
+                schedule.settUser(tUser);
+                scheduleRepository.save(schedule);
+            }
             Schedule schedule1=scheduleRepository.findAllByTUserAndAndDate(tUser,date).get(0);
             List<Event> eventList1=schedule1.getEventList();
             System.out.println(schedule1);
