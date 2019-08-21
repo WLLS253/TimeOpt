@@ -152,7 +152,7 @@ public class DaoController {
             event1.setFinish(event.isFinish());
             event1.setFinishTime(event.getFinishTime());
             event1.setStartTime(event.getStartTime());
-            event.setEndTime(event.getEndTime());
+            event1.setEndTime(event.getEndTime());
             return  Util.success(eventRepository.save(event1));
 
         }catch (Exception e){
